@@ -1,5 +1,6 @@
+from typing import Any, Dict, List, Optional, Literal
+
 import requests
-from typing import Any, Dict, List, Optional, Union, Literal
 
 # Enumerations for certain fields to improve usability and type safety
 Direction = Literal['in', 'out', 'self']
