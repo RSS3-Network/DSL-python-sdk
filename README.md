@@ -53,19 +53,48 @@ print(activity)
 Retrieve a list of activities for a specific account. You can also specify various parameters to filter the results.
 
 ```python
-# Get account activities
+# Get account activities with minimal parameters
 activities = client.get_account_activities(
     account="0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+    limit=10
+)
+print(activities)
+```
+
+### Get Account Activities with Filters
+
+You can also retrieve activities for a specific account with additional filters.
+
+```python
+# Get account activities with network filter
+activities = client.get_account_activities(
+    account="vitalik.eth",
+    network=["ethereum", "polygon"]
+)
+print(activities)
+
+# Get account activities with platform filter
+activities = client.get_account_activities(
+    account="vitalik.eth",
+    platform=["OpenSea", "Uniswap"]
+)
+print(activities)
+
+# Get account activities with tag filter
+activities = client.get_account_activities(
+    account="vitalik.eth",
+    tag=["collectible", "exchange"]
+)
+print(activities)
+
+# Get account activities with multiple filters
+activities = client.get_account_activities(
+    account="vitalik.eth",
+    network=["farcaster"],
+    platform=["Farcaster"],
+    tag=["social"],
     limit=50,
-    action_limit=5,
-    since_timestamp=1609459200,  # January 1, 2021
-    until_timestamp=1640995200,  # January 1, 2022
-    success=True,
-    direction="in",
-    network=["ethereum", "polygon"],
-    tag=["exchange", "transaction"],
-    type=["transfer", "swap"],
-    platform=["Uniswap", "OpenSea"]
+    action_limit=5
 )
 print(activities)
 ```
