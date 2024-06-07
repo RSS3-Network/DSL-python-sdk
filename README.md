@@ -4,13 +4,11 @@ A Python SDK for interacting with the RSS3 Data Sub Layer (DSL) API.
 
 ## Installation
 
-To install `rss3-dsl-client`, you can use [Poetry](https://python-poetry.org/). First, ensure you have Poetry installed, then run:
+To install `rss3-dsl-client`, you can run the following command:
 
 ```sh
-poetry add rss3-dsl-client
+pip install rss3-dsl-client
 ```
-
-This will add `rss3-dsl-client` to your project's dependencies.
 
 ## Usage
 
