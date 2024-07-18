@@ -34,6 +34,13 @@ class Token(BaseModel):
     parsed_image_url: Optional[str] = None
 
 
+class TransactionBridge(BaseModel):
+    action: str
+    source_network: Network
+    target_network: Network
+    token: Token
+
+
 class NonFungibleTokenMetadata(BaseModel):
     title: Optional[str]
     description: Optional[str]
@@ -212,6 +219,42 @@ class SocialProxyMetadata(SocialProxy):
     pass
 
 
+class TransactionApprovalMetadata(Token):
+    pass
+
+
+# fetch_transaction_bridge_activities
+class TransactionBridgeMetadata(TransactionBridge):
+    pass
+
+
+# fetch_transaction_burn_activities
+class TransactionBurnMetadata(Token):
+    pass
+
+
+# fetch_transaction_mint_activities
+class TransactionMintMetadata(Token):
+    pass
+
+
+# fetch_transaction_transfer_activities
+class TransactionTransferMetadata(Token):
+    pass
+
+
+class Author(BaseModel):
+    name: str
+
+
+class RssFeedMetadata(BaseModel):
+    title: str
+    description: str
+    pub_date: Optional[datetime] = None
+    tags: Optional[List[str]] = None
+    authors: Optional[List[Author]] = None
+
+
 class Action(BaseModel, Generic[T]):
     tag: ActivityTag
     type: ActivityType
@@ -247,8 +290,7 @@ class Meta(BaseModel):
 
 class Activities(BaseModel, Generic[T]):
     data: List[Activity[T]]
-    meta: Meta
-
+    meta: Optional[Meta] = None
 
 CollectibleApprovalActivities = Activities[CollectibleApprovalMetadata]
 CollectibleBurnActivities = Activities[CollectibleBurnMetadata]
@@ -274,3 +316,11 @@ SocialRewardActivities = Activities[SocialRewardMetadata]
 SocialShareActivities = Activities[SocialShareMetadata]
 SocialProfileActivities = Activities[SocialProfileMetadata]
 SocialProxyActivities = Activities[SocialProxyMetadata]
+
+TransactionApprovalActivities = Activities[TransactionApprovalMetadata]
+TransactionBridgeActivities = Activities[TransactionBridgeMetadata]
+TransactionBurnActivities = Activities[TransactionBurnMetadata]
+TransactionMintActivities = Activities[TransactionMintMetadata]
+TransactionTransferActivities = Activities[TransactionTransferMetadata]
+
+RssFeedActivities = Activities[RssFeedMetadata]

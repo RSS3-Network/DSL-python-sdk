@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class Direction(str, Enum):
     IN = 'in'
     OUT = 'out'
@@ -20,6 +21,7 @@ class Network(str, Enum):
     OPTIMISM = 'optimism'
     POLYGON = 'polygon'
     VSL = 'vsl'
+    RSS = 'rss'
 
 
 class Platform(str, Enum):

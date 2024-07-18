@@ -10,7 +10,8 @@ from rss3_dsl_client.models import PaginationOptions, ActivityFilter, Activities
     ExchangeStakingActivities, ExchangeSwapActivities, MetaverseBurnActivities, MetaverseMintActivities, \
     MetaverseTradeActivities, MetaverseTransferActivities, SocialCommentActivities, SocialDeleteActivities, \
     SocialMintActivities, SocialPostActivities, SocialProfileActivities, SocialProxyActivities, SocialReviseActivities, \
-    SocialRewardActivities, SocialShareActivities
+    SocialRewardActivities, SocialShareActivities, TransactionApprovalActivities, TransactionBridgeActivities, \
+    TransactionBurnActivities, TransactionMintActivities, TransactionTransferActivities, RssFeedActivities
 
 
 class RSS3Client:
@@ -481,7 +482,7 @@ class RSS3Client:
             account: str,
             filters: Optional[ActivityFilter] = None,
             pagination: Optional[PaginationOptions] = None
-    ) -> Dict[str, Any]:
+    ) -> TransactionApprovalActivities:
         """
         Retrieve transaction approval activities for a specific account.
 
@@ -490,8 +491,9 @@ class RSS3Client:
         :param pagination: Pagination options for the request.
         :return: A dictionary containing the transaction approval activities.
         """
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.TRANSACTION,
-                                     activity_type=ActivityType.APPROVAL)
+        activities = self.__do_fetch_activities(account, pagination=pagination, filters=filters,
+                                                tag=ActivityTag.TRANSACTION, activity_type=ActivityType.APPROVAL)
+        return TransactionApprovalActivities(**activities)
 
     @validate_call
     def fetch_transaction_bridge_activities(
@@ -499,7 +501,7 @@ class RSS3Client:
             account: str,
             filters: Optional[ActivityFilter] = None,
             pagination: Optional[PaginationOptions] = None
-    ) -> Dict[str, Any]:
+    ) -> TransactionBridgeActivities:
         """
         Retrieve transaction bridge activities for a specific account.
 
@@ -508,8 +510,9 @@ class RSS3Client:
         :param pagination: Pagination options for the request.
         :return: A dictionary containing the transaction bridge activities.
         """
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.TRANSACTION,
-                                     activity_type=ActivityType.BRIDGE)
+        activities = self.__do_fetch_activities(account, pagination=pagination, filters=filters,
+                                                tag=ActivityTag.TRANSACTION, activity_type=ActivityType.BRIDGE)
+        return TransactionBridgeActivities(**activities)
 
     @validate_call
     def fetch_transaction_burn_activities(
@@ -517,7 +520,7 @@ class RSS3Client:
             account: str,
             filters: Optional[ActivityFilter] = None,
             pagination: Optional[PaginationOptions] = None
-    ) -> Dict[str, Any]:
+    ) -> TransactionBurnActivities:
         """
         Retrieve transaction burn activities for a specific account.
 
@@ -526,8 +529,9 @@ class RSS3Client:
         :param pagination: Pagination options for the request.
         :return: A dictionary containing the transaction burn activities.
         """
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.TRANSACTION,
-                                     activity_type=ActivityType.BURN)
+        activities = self.__do_fetch_activities(account, pagination=pagination, filters=filters,
+                                                tag=ActivityTag.TRANSACTION, activity_type=ActivityType.BURN)
+        return TransactionBurnActivities(**activities)
 
     @validate_call
     def fetch_transaction_mint_activities(
@@ -535,7 +539,7 @@ class RSS3Client:
             account: str,
             filters: Optional[ActivityFilter] = None,
             pagination: Optional[PaginationOptions] = None
-    ) -> Dict[str, Any]:
+    ) -> TransactionMintActivities:
         """
         Retrieve transaction mint activities for a specific account.
 
@@ -544,8 +548,9 @@ class RSS3Client:
         :param pagination: Pagination options for the request.
         :return: A dictionary containing the transaction mint activities.
         """
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.TRANSACTION,
-                                     activity_type=ActivityType.MINT)
+        activities = self.__do_fetch_activities(account, pagination=pagination, filters=filters,
+                                                tag=ActivityTag.TRANSACTION, activity_type=ActivityType.MINT)
+        return TransactionMintActivities(**activities)
 
     @validate_call
     def fetch_transaction_transfer_activities(
@@ -553,7 +558,7 @@ class RSS3Client:
             account: str,
             filters: Optional[ActivityFilter] = None,
             pagination: Optional[PaginationOptions] = None
-    ) -> Dict[str, Any]:
+    ) -> TransactionTransferActivities:
         """
         Retrieve transaction transfer activities for a specific account.
 
@@ -562,23 +567,18 @@ class RSS3Client:
         :param pagination: Pagination options for the request.
         :return: A dictionary containing the transaction transfer activities.
         """
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.TRANSACTION,
-                                     activity_type=ActivityType.TRANSFER)
+        activities = self.__do_fetch_activities(account, pagination=pagination, filters=filters,
+                                                tag=ActivityTag.TRANSACTION, activity_type=ActivityType.TRANSFER)
+        return TransactionTransferActivities(**activities)
 
-    @validate_call
-    def fetch_rss_feed_activities(
-            self,
-            account: str,
-            filters: Optional[ActivityFilter] = None,
-            pagination: Optional[PaginationOptions] = None
-    ) -> Dict[str, Any]:
+    def fetch_rss_activity_by_path(self, path: str) -> RssFeedActivities:
         """
-        Retrieve RSS feed activities for a specific account.
+        Retrieve RSS activity details by path.
 
-        :param account: The account address.
-        :param filters: Additional filters to apply to the activity retrieval.
-        :param pagination: Pagination options for the request.
-        :return: A dictionary containing the RSS feed activities.
+        :param path: The RSS path.
+        :return: A dictionary containing the RSS activity details.
         """
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.RSS,
-                                     activity_type=ActivityType.FEED)
+        url = f"{self.base_url}/rss/{path}"
+        response = requests.get(url)
+        response_json = response.json()
+        return RssFeedActivities(**response_json)
