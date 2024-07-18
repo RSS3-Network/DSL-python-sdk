@@ -4,7 +4,10 @@ import requests
 from pydantic import validate_call
 
 from rss3_dsl_client.enums import ActivityTag, ActivityType
-from rss3_dsl_client.models import PaginationOptions, ActivityFilter, Activities
+from rss3_dsl_client.models import PaginationOptions, ActivityFilter, Activities, CollectibleApprovalActivities, \
+    CollectibleBurnActivities, CollectibleMintActivities, CollectibleTradeActivities, CollectibleTransferActivities, \
+    ExchangeLiquidityMetadata, ExchangeStakingMetadata, ExchangeSwapMetadata, ExchangeLiquidityActivities, \
+    ExchangeStakingActivities, ExchangeSwapActivities
 
 
 class RSS3Client:
@@ -38,9 +41,16 @@ class RSS3Client:
         :param activity_type: Type for the activities.
         :return: A dictionary containing the account activities.
         """
+        response_json = self.__do_fetch_activities(account, tag, activity_type, filters, pagination)
+        return Activities(**response_json)
+
+    def __do_fetch_activities(self, account: str,
+                              tag: Optional[ActivityTag] = None,
+                              activity_type: Optional[ActivityType] = None,
+                              pagination: Optional[PaginationOptions] = None,
+                              filters: Optional[ActivityFilter] = None) -> dict:
         if pagination is None:
             pagination = PaginationOptions()
-
         url = f"{self.base_url}/decentralized/{account}"
         params = {
             "limit": pagination.limit,
@@ -57,7 +67,7 @@ class RSS3Client:
         }
         response = requests.get(url, params=params)
         response_json = response.json()
-        return Activities(**response_json)
+        return response_json
 
     @validate_call
     def fetch_collectible_approval_activities(
@@ -65,7 +75,7 @@ class RSS3Client:
             account: str,
             filters: Optional[ActivityFilter] = None,
             pagination: Optional[PaginationOptions] = None
-    ) -> Activities:
+    ) -> CollectibleApprovalActivities:
         """
         Retrieve collectible approval activities for a specific account.
 
@@ -74,8 +84,9 @@ class RSS3Client:
         :param pagination: Pagination options for the request.
         :return: A dictionary containing the collectible approval activities.
         """
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.COLLECTIBLE,
-                                     activity_type=ActivityType.APPROVAL)
+        activities = self.__do_fetch_activities(account, pagination=pagination, filters=filters,
+                                                tag=ActivityTag.COLLECTIBLE, activity_type=ActivityType.APPROVAL)
+        return CollectibleApprovalActivities(**activities)
 
     @validate_call
     def fetch_collectible_burn_activities(
@@ -83,7 +94,7 @@ class RSS3Client:
             account: str,
             filters: Optional[ActivityFilter] = None,
             pagination: Optional[PaginationOptions] = None
-    ) -> Dict[str, Any]:
+    ) -> CollectibleBurnActivities:
         """
         Retrieve collectible burn activities for a specific account.
 
@@ -92,8 +103,9 @@ class RSS3Client:
         :param pagination: Pagination options for the request.
         :return: A dictionary containing the collectible burn activities.
         """
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.COLLECTIBLE,
-                                     activity_type=ActivityType.BURN)
+        activities = self.__do_fetch_activities(account, pagination=pagination, filters=filters,
+                                                tag=ActivityTag.COLLECTIBLE, activity_type=ActivityType.BURN)
+        return CollectibleBurnActivities(**activities)
 
     @validate_call
     def fetch_collectible_mint_activities(
@@ -101,7 +113,7 @@ class RSS3Client:
             account: str,
             filters: Optional[ActivityFilter] = None,
             pagination: Optional[PaginationOptions] = None
-    ) -> Dict[str, Any]:
+    ) -> CollectibleMintActivities:
         """
         Retrieve collectible mint activities for a specific account.
 
@@ -110,8 +122,9 @@ class RSS3Client:
         :param pagination: Pagination options for the request.
         :return: A dictionary containing the collectible mint activities.
         """
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.COLLECTIBLE,
-                                     activity_type=ActivityType.MINT)
+        activities = self.__do_fetch_activities(account, pagination=pagination, filters=filters,
+                                                tag=ActivityTag.COLLECTIBLE, activity_type=ActivityType.MINT)
+        return CollectibleMintActivities(**activities)
 
     @validate_call
     def fetch_collectible_trade_activities(
@@ -119,7 +132,7 @@ class RSS3Client:
             account: str,
             filters: Optional[ActivityFilter] = None,
             pagination: Optional[PaginationOptions] = None
-    ) -> Dict[str, Any]:
+    ) -> CollectibleTradeActivities:
         """
         Retrieve collectible trade activities for a specific account.
 
@@ -128,8 +141,9 @@ class RSS3Client:
         :param pagination: Pagination options for the request.
         :return: A dictionary containing the collectible trade activities.
         """
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.COLLECTIBLE,
-                                     activity_type=ActivityType.TRADE)
+        activities = self.__do_fetch_activities(account, pagination=pagination, filters=filters,
+                                                tag=ActivityTag.COLLECTIBLE, activity_type=ActivityType.TRADE)
+        return CollectibleTradeActivities(**activities)
 
     @validate_call
     def fetch_collectible_transfer_activities(
@@ -137,7 +151,7 @@ class RSS3Client:
             account: str,
             filters: Optional[ActivityFilter] = None,
             pagination: Optional[PaginationOptions] = None
-    ) -> Dict[str, Any]:
+    ) -> CollectibleTransferActivities:
         """
         Retrieve collectible transfer activities for a specific account.
 
@@ -146,8 +160,10 @@ class RSS3Client:
         :param pagination: Pagination options for the request.
         :return: A dictionary containing the collectible transfer activities.
         """
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.COLLECTIBLE,
-                                     activity_type=ActivityType.TRANSFER)
+        activities = self.__do_fetch_activities(account, pagination=pagination, filters=filters,
+                                                tag=ActivityTag.COLLECTIBLE,
+                                                activity_type=ActivityType.TRANSFER)
+        return CollectibleTransferActivities(**activities)
 
     @validate_call
     def fetch_exchange_liquidity_activities(
@@ -155,7 +171,7 @@ class RSS3Client:
             account: str,
             filters: Optional[ActivityFilter] = None,
             pagination: Optional[PaginationOptions] = None
-    ) -> Dict[str, Any]:
+    ) -> ExchangeLiquidityActivities:
         """
         Retrieve exchange liquidity activities for a specific account.
 
@@ -164,8 +180,9 @@ class RSS3Client:
         :param pagination: Pagination options for the request.
         :return: A dictionary containing the exchange liquidity activities.
         """
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.EXCHANGE,
-                                     activity_type=ActivityType.LIQUIDITY)
+        activities = self.__do_fetch_activities(account, pagination=pagination, filters=filters,
+                                                tag=ActivityTag.EXCHANGE, activity_type=ActivityType.LIQUIDITY)
+        return ExchangeLiquidityActivities(**activities)
 
     @validate_call
     def fetch_exchange_staking_activities(
@@ -173,7 +190,7 @@ class RSS3Client:
             account: str,
             filters: Optional[ActivityFilter] = None,
             pagination: Optional[PaginationOptions] = None
-    ) -> Dict[str, Any]:
+    ) -> ExchangeStakingActivities:
         """
         Retrieve exchange staking activities for a specific account.
 
@@ -182,8 +199,9 @@ class RSS3Client:
         :param pagination: Pagination options for the request.
         :return: A dictionary containing the exchange staking activities.
         """
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.EXCHANGE,
-                                     activity_type=ActivityType.STAKING)
+        activities = self.__do_fetch_activities(account, pagination=pagination, filters=filters,
+                                                tag=ActivityTag.EXCHANGE, activity_type=ActivityType.STAKING)
+        return ExchangeStakingActivities(**activities)
 
     @validate_call
     def fetch_exchange_swap_activities(
@@ -191,7 +209,7 @@ class RSS3Client:
             account: str,
             filters: Optional[ActivityFilter] = None,
             pagination: Optional[PaginationOptions] = None
-    ) -> Dict[str, Any]:
+    ) -> ExchangeSwapActivities:
         """
         Retrieve exchange swap activities for a specific account.
 
@@ -200,8 +218,9 @@ class RSS3Client:
         :param pagination: Pagination options for the request.
         :return: A dictionary containing the exchange swap activities.
         """
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.EXCHANGE,
-                                     activity_type=ActivityType.SWAP)
+        activities = self.__do_fetch_activities(account, pagination=pagination, filters=filters,
+                                                tag=ActivityTag.EXCHANGE, activity_type=ActivityType.SWAP)
+        return ExchangeSwapActivities(**activities)
 
     @validate_call
     def fetch_metaverse_burn_activities(
