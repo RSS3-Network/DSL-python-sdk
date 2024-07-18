@@ -32,9 +32,6 @@ class SocialProfile(BaseModel):
     key: Optional[str] = None
     value: Optional[str] = None
 
-    class Config:
-        orm_mode = True
-
 
 class SocialProxy(BaseModel):
     action: Optional[int] = None
