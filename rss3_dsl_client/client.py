@@ -7,7 +7,10 @@ from rss3_dsl_client.enums import ActivityTag, ActivityType
 from rss3_dsl_client.models import PaginationOptions, ActivityFilter, Activities, CollectibleApprovalActivities, \
     CollectibleBurnActivities, CollectibleMintActivities, CollectibleTradeActivities, CollectibleTransferActivities, \
     ExchangeLiquidityMetadata, ExchangeStakingMetadata, ExchangeSwapMetadata, ExchangeLiquidityActivities, \
-    ExchangeStakingActivities, ExchangeSwapActivities
+    ExchangeStakingActivities, ExchangeSwapActivities, MetaverseBurnActivities, MetaverseMintActivities, \
+    MetaverseTradeActivities, MetaverseTransferActivities, SocialCommentActivities, SocialDeleteActivities, \
+    SocialMintActivities, SocialPostActivities, SocialProfileActivities, SocialProxyActivities, SocialReviseActivities, \
+    SocialRewardActivities, SocialShareActivities
 
 
 class RSS3Client:
@@ -228,7 +231,7 @@ class RSS3Client:
             account: str,
             filters: Optional[ActivityFilter] = None,
             pagination: Optional[PaginationOptions] = None
-    ) -> Dict[str, Any]:
+    ) -> MetaverseBurnActivities:
         """
         Retrieve metaverse burn activities for a specific account.
 
@@ -237,8 +240,9 @@ class RSS3Client:
         :param pagination: Pagination options for the request.
         :return: A dictionary containing the metaverse burn activities.
         """
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.METAVERSE,
-                                     activity_type=ActivityType.BURN)
+        activities = self.__do_fetch_activities(account, pagination=pagination, filters=filters,
+                                                tag=ActivityTag.METAVERSE, activity_type=ActivityType.BURN)
+        return MetaverseBurnActivities(**activities)
 
     @validate_call
     def fetch_metaverse_mint_activities(
@@ -246,7 +250,7 @@ class RSS3Client:
             account: str,
             filters: Optional[ActivityFilter] = None,
             pagination: Optional[PaginationOptions] = None
-    ) -> Dict[str, Any]:
+    ) -> MetaverseMintActivities:
         """
         Retrieve metaverse mint activities for a specific account.
 
@@ -255,8 +259,10 @@ class RSS3Client:
         :param pagination: Pagination options for the request.
         :return: A dictionary containing the metaverse mint activities.
         """
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.METAVERSE,
-                                     activity_type=ActivityType.MINT)
+        activities = self.__do_fetch_activities(account, pagination=pagination, filters=filters,
+                                                tag=ActivityTag.METAVERSE,
+                                                activity_type=ActivityType.MINT)
+        return MetaverseMintActivities(**activities)
 
     @validate_call
     def fetch_metaverse_trade_activities(
@@ -264,7 +270,7 @@ class RSS3Client:
             account: str,
             filters: Optional[ActivityFilter] = None,
             pagination: Optional[PaginationOptions] = None
-    ) -> Dict[str, Any]:
+    ) -> MetaverseTradeActivities:
         """
         Retrieve metaverse trade activities for a specific account.
 
@@ -273,8 +279,9 @@ class RSS3Client:
         :param pagination: Pagination options for the request.
         :return: A dictionary containing the metaverse trade activities.
         """
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.METAVERSE,
-                                     activity_type=ActivityType.TRADE)
+        activities = self.__do_fetch_activities(account, pagination=pagination, filters=filters,
+                                                tag=ActivityTag.METAVERSE, activity_type=ActivityType.TRADE)
+        return MetaverseTradeActivities(**activities)
 
     @validate_call
     def fetch_metaverse_transfer_activities(
@@ -282,7 +289,7 @@ class RSS3Client:
             account: str,
             filters: Optional[ActivityFilter] = None,
             pagination: Optional[PaginationOptions] = None
-    ) -> Dict[str, Any]:
+    ) -> MetaverseTransferActivities:
         """
         Retrieve metaverse transfer activities for a specific account.
 
@@ -291,26 +298,9 @@ class RSS3Client:
         :param pagination: Pagination options for the request.
         :return: A dictionary containing the metaverse transfer activities.
         """
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.METAVERSE,
-                                     activity_type=ActivityType.TRANSFER)
-
-    @validate_call
-    def fetch_rss_feed_activities(
-            self,
-            account: str,
-            filters: Optional[ActivityFilter] = None,
-            pagination: Optional[PaginationOptions] = None
-    ) -> Dict[str, Any]:
-        """
-        Retrieve RSS feed activities for a specific account.
-
-        :param account: The account address.
-        :param filters: Additional filters to apply to the activity retrieval.
-        :param pagination: Pagination options for the request.
-        :return: A dictionary containing the RSS feed activities.
-        """
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.RSS,
-                                     activity_type=ActivityType.FEED)
+        activities = self.__do_fetch_activities(account, pagination=pagination, filters=filters,
+                                                tag=ActivityTag.METAVERSE, activity_type=ActivityType.TRANSFER)
+        return MetaverseTransferActivities(**activities)
 
     @validate_call
     def fetch_social_comment_activities(
@@ -318,7 +308,7 @@ class RSS3Client:
             account: str,
             filters: Optional[ActivityFilter] = None,
             pagination: Optional[PaginationOptions] = None
-    ) -> Dict[str, Any]:
+    ) -> SocialCommentActivities:
         """
         Retrieve social comment activities for a specific account.
 
@@ -327,8 +317,9 @@ class RSS3Client:
         :param pagination: Pagination options for the request.
         :return: A dictionary containing the social comment activities.
         """
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.SOCIAL,
-                                     activity_type=ActivityType.COMMENT)
+        activities = self.__do_fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.SOCIAL,
+                                                activity_type=ActivityType.COMMENT)
+        return SocialCommentActivities(**activities)
 
     @validate_call
     def fetch_social_delete_activities(
@@ -336,7 +327,7 @@ class RSS3Client:
             account: str,
             filters: Optional[ActivityFilter] = None,
             pagination: Optional[PaginationOptions] = None
-    ) -> Dict[str, Any]:
+    ) -> SocialDeleteActivities:
         """
         Retrieve social delete activities for a specific account.
 
@@ -345,8 +336,9 @@ class RSS3Client:
         :param pagination: Pagination options for the request.
         :return: A dictionary containing the social delete activities.
         """
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.SOCIAL,
-                                     activity_type=ActivityType.DELETE)
+        activities = self.__do_fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.SOCIAL,
+                                                activity_type=ActivityType.DELETE)
+        return SocialDeleteActivities(**activities)
 
     @validate_call
     def fetch_social_mint_activities(
@@ -354,7 +346,7 @@ class RSS3Client:
             account: str,
             filters: Optional[ActivityFilter] = None,
             pagination: Optional[PaginationOptions] = None
-    ) -> Dict[str, Any]:
+    ) -> SocialMintActivities:
         """
         Retrieve social mint activities for a specific account.
 
@@ -363,8 +355,9 @@ class RSS3Client:
         :param pagination: Pagination options for the request.
         :return: A dictionary containing the social mint activities.
         """
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.SOCIAL,
-                                     activity_type=ActivityType.MINT)
+        activities = self.__do_fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.SOCIAL,
+                                                activity_type=ActivityType.MINT)
+        return SocialMintActivities(**activities)
 
     @validate_call
     def fetch_social_post_activities(
@@ -372,7 +365,7 @@ class RSS3Client:
             account: str,
             filters: Optional[ActivityFilter] = None,
             pagination: Optional[PaginationOptions] = None
-    ) -> Dict[str, Any]:
+    ) -> SocialPostActivities:
         """
         Retrieve social post activities for a specific account.
 
@@ -381,8 +374,9 @@ class RSS3Client:
         :param pagination: Pagination options for the request.
         :return: A dictionary containing the social post activities.
         """
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.SOCIAL,
-                                     activity_type=ActivityType.POST)
+        activities = self.__do_fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.SOCIAL,
+                                                activity_type=ActivityType.POST)
+        return SocialPostActivities(**activities)
 
     @validate_call
     def fetch_social_profile_activities(
@@ -390,7 +384,7 @@ class RSS3Client:
             account: str,
             filters: Optional[ActivityFilter] = None,
             pagination: Optional[PaginationOptions] = None
-    ) -> Dict[str, Any]:
+    ) -> SocialProfileActivities:
         """
         Retrieve social profile activities for a specific account.
 
@@ -399,8 +393,9 @@ class RSS3Client:
         :param pagination: Pagination options for the request.
         :return: A dictionary containing the social profile activities.
         """
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.SOCIAL,
-                                     activity_type=ActivityType.PROFILE)
+        activities = self.__do_fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.SOCIAL,
+                                                activity_type=ActivityType.PROFILE)
+        return SocialProfileActivities(**activities)
 
     @validate_call
     def fetch_social_proxy_activities(
@@ -408,7 +403,7 @@ class RSS3Client:
             account: str,
             filters: Optional[ActivityFilter] = None,
             pagination: Optional[PaginationOptions] = None
-    ) -> Dict[str, Any]:
+    ) -> SocialProxyActivities:
         """
         Retrieve social proxy activities for a specific account.
 
@@ -417,8 +412,9 @@ class RSS3Client:
         :param pagination: Pagination options for the request.
         :return: A dictionary containing the social proxy activities.
         """
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.SOCIAL,
-                                     activity_type=ActivityType.PROXY)
+        activities = self.__do_fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.SOCIAL,
+                                                activity_type=ActivityType.PROXY)
+        return SocialProxyActivities(**activities)
 
     @validate_call
     def fetch_social_revise_activities(
@@ -426,7 +422,7 @@ class RSS3Client:
             account: str,
             filters: Optional[ActivityFilter] = None,
             pagination: Optional[PaginationOptions] = None
-    ) -> Dict[str, Any]:
+    ) -> SocialReviseActivities:
         """
         Retrieve
         social revise activities for a specific account.
@@ -437,8 +433,9 @@ class RSS3Client:
         :return: A dictionary containing the social revise activities.
         """
 
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.SOCIAL,
-                                     activity_type=ActivityType.REVISE)
+        activities = self.__do_fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.SOCIAL,
+                                                activity_type=ActivityType.REVISE)
+        return SocialReviseActivities(**activities)
 
     @validate_call
     def fetch_social_reward_activities(
@@ -446,7 +443,7 @@ class RSS3Client:
             account: str,
             filters: Optional[ActivityFilter] = None,
             pagination: Optional[PaginationOptions] = None
-    ) -> Dict[str, Any]:
+    ) -> SocialRewardActivities:
         """
         Retrieve social reward activities for a specific account.
 
@@ -455,8 +452,9 @@ class RSS3Client:
         :param pagination: Pagination options for the request.
         :return: A dictionary containing the social reward activities.
         """
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.SOCIAL,
-                                     activity_type=ActivityType.REWARD)
+        activities = self.__do_fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.SOCIAL,
+                                                activity_type=ActivityType.REWARD)
+        return SocialRewardActivities(**activities)
 
     @validate_call
     def fetch_social_share_activities(
@@ -464,7 +462,7 @@ class RSS3Client:
             account: str,
             filters: Optional[ActivityFilter] = None,
             pagination: Optional[PaginationOptions] = None
-    ) -> Dict[str, Any]:
+    ) -> SocialShareActivities:
         """
         Retrieve social share activities for a specific account.
 
@@ -473,8 +471,9 @@ class RSS3Client:
         :param pagination: Pagination options for the request.
         :return: A dictionary containing the social share activities.
         """
-        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.SOCIAL,
-                                     activity_type=ActivityType.SHARE)
+        activities = self.__do_fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.SOCIAL,
+                                                activity_type=ActivityType.SHARE)
+        return SocialShareActivities(**activities)
 
     @validate_call
     def fetch_transaction_approval_activities(
@@ -565,3 +564,21 @@ class RSS3Client:
         """
         return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.TRANSACTION,
                                      activity_type=ActivityType.TRANSFER)
+
+    @validate_call
+    def fetch_rss_feed_activities(
+            self,
+            account: str,
+            filters: Optional[ActivityFilter] = None,
+            pagination: Optional[PaginationOptions] = None
+    ) -> Dict[str, Any]:
+        """
+        Retrieve RSS feed activities for a specific account.
+
+        :param account: The account address.
+        :param filters: Additional filters to apply to the activity retrieval.
+        :param pagination: Pagination options for the request.
+        :return: A dictionary containing the RSS feed activities.
+        """
+        return self.fetch_activities(account, pagination=pagination, filters=filters, tag=ActivityTag.RSS,
+                                     activity_type=ActivityType.FEED)
