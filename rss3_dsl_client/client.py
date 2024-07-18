@@ -1,17 +1,49 @@
-from typing import Any, Dict, Optional
+from typing import Optional
 
 import requests
 from pydantic import validate_call
 
-from rss3_dsl_client.enums import ActivityTag, ActivityType
-from rss3_dsl_client.models import PaginationOptions, ActivityFilter, Activities, CollectibleApprovalActivities, \
-    CollectibleBurnActivities, CollectibleMintActivities, CollectibleTradeActivities, CollectibleTransferActivities, \
-    ExchangeLiquidityMetadata, ExchangeStakingMetadata, ExchangeSwapMetadata, ExchangeLiquidityActivities, \
-    ExchangeStakingActivities, ExchangeSwapActivities, MetaverseBurnActivities, MetaverseMintActivities, \
-    MetaverseTradeActivities, MetaverseTransferActivities, SocialCommentActivities, SocialDeleteActivities, \
-    SocialMintActivities, SocialPostActivities, SocialProfileActivities, SocialProxyActivities, SocialReviseActivities, \
-    SocialRewardActivities, SocialShareActivities, TransactionApprovalActivities, TransactionBridgeActivities, \
-    TransactionBurnActivities, TransactionMintActivities, TransactionTransferActivities, RssFeedActivities
+from rss3_dsl_client.schemas.collectible import (
+    CollectibleApprovalActivities,
+    CollectibleBurnActivities,
+    CollectibleMintActivities,
+    CollectibleTradeActivities,
+    CollectibleTransferActivities
+)
+from rss3_dsl_client.schemas.common import PaginationOptions, ActivityFilter, Activities
+from rss3_dsl_client.schemas.enums import ActivityTag, ActivityType
+from rss3_dsl_client.schemas.exchange import (
+    ExchangeLiquidityActivities,
+    ExchangeStakingActivities,
+    ExchangeSwapActivities
+)
+from rss3_dsl_client.schemas.metaverse import (
+    MetaverseBurnActivities,
+    MetaverseMintActivities,
+    MetaverseTradeActivities,
+    MetaverseTransferActivities
+)
+from rss3_dsl_client.schemas.rss import (
+    RssFeedActivities
+)
+from rss3_dsl_client.schemas.social import (
+    SocialCommentActivities,
+    SocialDeleteActivities,
+    SocialMintActivities,
+    SocialPostActivities,
+    SocialReviseActivities,
+    SocialRewardActivities,
+    SocialShareActivities,
+    SocialProfileActivities,
+    SocialProxyActivities
+)
+from rss3_dsl_client.schemas.transaction import (
+    TransactionApprovalActivities,
+    TransactionBridgeActivities,
+    TransactionBurnActivities,
+    TransactionMintActivities,
+    TransactionTransferActivities
+)
 
 
 class RSS3Client:

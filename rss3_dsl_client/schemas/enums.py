@@ -81,3 +81,12 @@ class ActivityType(str, Enum):
     TRADE = 'trade'
     TRANSFER = 'transfer'
     UNKNOWN = 'unknown'
+
+
+class Standard(str, Enum):
+    UNKNOWN = 'UNKNOWN'
+    ERC20 = 'ERC-20'
+    ERC165 = 'ERC-165'
+    ERC721 = 'ERC-721'
+    ERC1155 = 'ERC-1155'
+    ERC1967 = 'ERC-1967'
