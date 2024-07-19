@@ -1,112 +1,106 @@
-# rss3-dsl-client
+# RSS3Client 📡
 
-A Python SDK for interacting with the RSS3 Data Sub Layer (DSL) API.
+A client for interacting with the RSS3 Decentralized Service Layer (DSL) API.
 
-## Installation
+## Features ✨
 
-To install `rss3-dsl-client`, you can run the following command:
+- Fetch various types of activities for an account including collectibles, exchanges, metaverse, social, and transactions.
+- Supports pagination and filtering for activity retrieval.
+- Retrieve RSS activity details by path.
 
-```sh
+## Installation 🚀
+
+You can install the required dependencies using pip:
+
+```bash
 pip install rss3-dsl-client
 ```
 
-## Usage
-
-Here's a simple example of how to use the `rss3-dsl-client` to interact with the RSS3 DSL API.
+## Usage 📘
 
 ### Initialize the Client
 
-First, you need to initialize the client with the base URL of the API. You can use different URLs for development and production environments.
-
-#### Production Environment
-
 ```python
-from rss3_dsl_client.client import Client
+from rss3_dsl_client import RSS3Client
 
-# Initialize the client with the production base URL of the API
-client = Client(base_url="https://gi.rss3.io")
+client = RSS3Client()
 ```
 
-#### Development Environment
+### Fetch Social Post Activities
+
+Here are some examples of fetching social post activities with different parameters:
 
 ```python
-from rss3_dsl_client.client import Client
+from rss3_dsl_client.schemas.common import PaginationOptions, ActivityFilter
+from rss3_dsl_client.schemas.enums import Platform
 
-# Initialize the client with the development base URL of the API
-client = Client(base_url="https://gi.rss3.dev")
-```
-
-### Get Activity Details by Transaction ID
-
-You can retrieve activity details by providing a transaction ID.
-
-```python
-# Get activity details by transaction ID
-activity = client.get_activity_by_id("0x000000000000000000000000113f4b4c3765e5f05fd197c5c35b8a8a9b34245b")
-print(activity)
-```
-
-### Get Account Activities
-
-Retrieve a list of activities for a specific account. You can also specify various parameters to filter the results.
-
-```python
-# Get account activities with minimal parameters
-activities = client.get_account_activities(
+# Example 1: Basic usage with pagination
+social_post_activities = client.fetch_social_post_activities(
     account="0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
-    limit=10
+    pagination=PaginationOptions(limit=10)
 )
-print(activities)
+print(social_post_activities)
+
+# Example 2: Using filters for platform
+social_post_activities = client.fetch_social_post_activities(
+    account="0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+    filters=ActivityFilter(platform=[Platform.FARCASTER, Platform.LENS]),
+    pagination=PaginationOptions(limit=10)
+)
+print(social_post_activities)
+
+# Example 3: Using filters with time range
+social_post_activities = client.fetch_social_post_activities(
+    account="0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+    filters=ActivityFilter(since_timestamp=1625097600, until_timestamp=1627689600),
+    pagination=PaginationOptions(limit=10)
+)
+print(social_post_activities)
 ```
 
-### Get Account Activities with Filters
+### Fetch RSS Activity by Path
 
-You can also retrieve activities for a specific account with additional filters.
-
-```python
-# Get account activities with network filter
-activities = client.get_account_activities(
-    account="vitalik.eth",
-    network=["ethereum", "polygon"]
-)
-print(activities)
-
-# Get account activities with platform filter
-activities = client.get_account_activities(
-    account="vitalik.eth",
-    platform=["OpenSea", "Uniswap"]
-)
-print(activities)
-
-# Get account activities with tag filter
-activities = client.get_account_activities(
-    account="vitalik.eth",
-    tag=["collectible", "exchange"]
-)
-print(activities)
-
-# Get account activities with multiple filters
-activities = client.get_account_activities(
-    account="vitalik.eth",
-    network=["farcaster"],
-    platform=["Farcaster"],
-    tag=["social"],
-    limit=50,
-    action_limit=5
-)
-print(activities)
-```
-
-### Get RSS Activity by Path
-
-Retrieve RSS activity details by providing a specific path.
+You can also fetch RSS activity details by path using the `fetch_rss_activity_by_path` method:
 
 ```python
-# Get RSS activity by path
-rss_activity = client.get_rss_activity_by_path("abc")
+rss_activity = client.fetch_rss_activity_by_path(path="abc")
 print(rss_activity)
 ```
 
-## License
+### Other Available Methods
+
+The `RSS3Client` class provides various methods to fetch different types of activities. Below are the available methods:
+
+- `fetch_collectible_approval_activities`
+- `fetch_collectible_burn_activities`
+- `fetch_collectible_mint_activities`
+- `fetch_collectible_trade_activities`
+- `fetch_collectible_transfer_activities`
+- `fetch_exchange_liquidity_activities`
+- `fetch_exchange_staking_activities`
+- `fetch_exchange_swap_activities`
+- `fetch_metaverse_burn_activities`
+- `fetch_metaverse_mint_activities`
+- `fetch_metaverse_trade_activities`
+- `fetch_metaverse_transfer_activities`
+- `fetch_social_comment_activities`
+- `fetch_social_delete_activities`
+- `fetch_social_mint_activities`
+- `fetch_social_profile_activities`
+- `fetch_social_proxy_activities`
+- `fetch_social_revise_activities`
+- `fetch_social_reward_activities`
+- `fetch_social_share_activities`
+- `fetch_transaction_approval_activities`
+- `fetch_transaction_bridge_activities`
+- `fetch_transaction_burn_activities`
+- `fetch_transaction_mint_activities`
+- `fetch_transaction_transfer_activities`
+
+## Contributing 🤝
+
+Contributions are welcome! Please open an issue or submit a pull request.
+
+## License 📄
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

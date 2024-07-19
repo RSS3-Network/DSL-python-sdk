@@ -51,7 +51,7 @@ class RSS3Client:
     A client for interacting with the RSS3 Decentralized Service Layer (DSL) API.
     """
 
-    def __init__(self, base_url: str):
+    def __init__(self, base_url: str = "https://gi.rss3.io"):
         """
         Initialize the client with the base URL of the RSS3 DSL API.
 
