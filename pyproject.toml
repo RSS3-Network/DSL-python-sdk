@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "rss3-dsl-sdk"
-version = "0.3.0"
+version = "0.4.0"
 description = "A Python SDK for RSS3 Data Sub Layer (DSL)"
 authors = ["Your Name <your.email@example.com>"]
 readme = "README.md"
