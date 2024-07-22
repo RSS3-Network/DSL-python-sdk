@@ -3,7 +3,7 @@ from typing import Generic, TypeVar, List, Optional
 
 from pydantic import BaseModel, Field
 
-from rss3_dsl_client.schemas.enums import Direction, Network, ActivityTag, ActivityType, Standard, Platform
+from rss3_dsl_sdk.schemas.enums import Direction, Network, ActivityTag, ActivityType, Standard, Platform
 
 T = TypeVar('T')
 

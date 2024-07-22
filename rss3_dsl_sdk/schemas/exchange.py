@@ -1,4 +1,4 @@
-from rss3_dsl_client.schemas.base import Token, Activities, BaseModel, Field
+from rss3_dsl_sdk.schemas.base import Token, Activities, BaseModel, Field
 
 
 class ExchangeLiquidityMetadata(Token):

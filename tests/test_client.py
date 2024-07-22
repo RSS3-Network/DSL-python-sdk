@@ -1,6 +1,6 @@
 import pytest
 
-from rss3_dsl_client.client import RSS3Client
+from rss3_dsl_sdk.client import RSS3Client
 
 
 @pytest.fixture

@@ -1,4 +1,4 @@
-from rss3_dsl_client.schemas.base import Token, Activities, BaseModel, Network
+from rss3_dsl_sdk.schemas.base import Token, Activities, BaseModel, Network
 
 
 class TransactionBridge(BaseModel):

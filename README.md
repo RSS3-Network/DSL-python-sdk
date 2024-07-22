@@ -1,6 +1,6 @@
-# RSS3Client 📡
+# RSS3 DSL SDK 📡
 
-A client for interacting with the RSS3 Decentralized Service Layer (DSL) API.
+A client for interacting with the RSS3 Data Sub Layer (DSL) API.
 
 ## Features ✨
 
@@ -13,7 +13,7 @@ A client for interacting with the RSS3 Decentralized Service Layer (DSL) API.
 You can install the required dependencies using pip:
 
 ```bash
-pip install rss3-dsl-client
+pip install rss3-dsl-sdk
 ```
 
 ## Usage 📘
@@ -21,7 +21,7 @@ pip install rss3-dsl-client
 ### Initialize the Client
 
 ```python
-from rss3_dsl_client import RSS3Client
+from rss3_dsl_sdk import RSS3Client
 
 client = RSS3Client()
 ```
@@ -31,8 +31,8 @@ client = RSS3Client()
 Here are some examples of fetching social post activities with different parameters:
 
 ```python
-from rss3_dsl_client.schemas.common import PaginationOptions, ActivityFilter
-from rss3_dsl_client.schemas.enums import Platform
+from rss3_dsl_sdk.schemas.common import PaginationOptions, ActivityFilter
+from rss3_dsl_sdk.schemas.enums import Platform
 
 # Example 1: Basic usage with pagination
 social_post_activities = client.fetch_social_post_activities(

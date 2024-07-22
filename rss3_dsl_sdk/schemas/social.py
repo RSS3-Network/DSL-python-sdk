@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from rss3_dsl_client.schemas.base import Token, Activities, BaseModel, Media, Optional, List
+from rss3_dsl_sdk.schemas.base import Token, Activities, BaseModel, Media, Optional, List
 
 
 class SocialPost(BaseModel):

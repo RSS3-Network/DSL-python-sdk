@@ -3,30 +3,30 @@ from typing import Optional
 import requests
 from pydantic import validate_call
 
-from rss3_dsl_client.schemas.collectible import (
+from rss3_dsl_sdk.schemas.collectible import (
     CollectibleApprovalActivities,
     CollectibleBurnActivities,
     CollectibleMintActivities,
     CollectibleTradeActivities,
     CollectibleTransferActivities
 )
-from rss3_dsl_client.schemas.base import PaginationOptions, ActivityFilter, Activities
-from rss3_dsl_client.schemas.enums import ActivityTag, ActivityType
-from rss3_dsl_client.schemas.exchange import (
+from rss3_dsl_sdk.schemas.base import PaginationOptions, ActivityFilter, Activities
+from rss3_dsl_sdk.schemas.enums import ActivityTag, ActivityType
+from rss3_dsl_sdk.schemas.exchange import (
     ExchangeLiquidityActivities,
     ExchangeStakingActivities,
     ExchangeSwapActivities
 )
-from rss3_dsl_client.schemas.metaverse import (
+from rss3_dsl_sdk.schemas.metaverse import (
     MetaverseBurnActivities,
     MetaverseMintActivities,
     MetaverseTradeActivities,
     MetaverseTransferActivities
 )
-from rss3_dsl_client.schemas.rss import (
+from rss3_dsl_sdk.schemas.rss import (
     RssFeedActivities
 )
-from rss3_dsl_client.schemas.social import (
+from rss3_dsl_sdk.schemas.social import (
     SocialCommentActivities,
     SocialDeleteActivities,
     SocialMintActivities,
@@ -37,7 +37,7 @@ from rss3_dsl_client.schemas.social import (
     SocialProfileActivities,
     SocialProxyActivities
 )
-from rss3_dsl_client.schemas.transaction import (
+from rss3_dsl_sdk.schemas.transaction import (
     TransactionApprovalActivities,
     TransactionBridgeActivities,
     TransactionBurnActivities,
@@ -48,7 +48,7 @@ from rss3_dsl_client.schemas.transaction import (
 
 class RSS3Client:
     """
-    A client for interacting with the RSS3 Decentralized Service Layer (DSL) API.
+    A client for interacting with the RSS3 Data Sub Layer (DSL) API.
     """
 
     def __init__(self, base_url: str = "https://gi.rss3.io"):
