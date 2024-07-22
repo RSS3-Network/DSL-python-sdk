@@ -1,4 +1,4 @@
-from rss3_dsl_client.schemas.common import Token, Activities
+from rss3_dsl_client.schemas.base import Token, Activities
 
 
 class CollectibleApprovalMetadata(Token):

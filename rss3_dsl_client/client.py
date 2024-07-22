@@ -10,7 +10,7 @@ from rss3_dsl_client.schemas.collectible import (
     CollectibleTradeActivities,
     CollectibleTransferActivities
 )
-from rss3_dsl_client.schemas.common import PaginationOptions, ActivityFilter, Activities
+from rss3_dsl_client.schemas.base import PaginationOptions, ActivityFilter, Activities
 from rss3_dsl_client.schemas.enums import ActivityTag, ActivityType
 from rss3_dsl_client.schemas.exchange import (
     ExchangeLiquidityActivities,

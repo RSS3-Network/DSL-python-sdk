@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from rss3_dsl_client.schemas.common import Activities, BaseModel, Optional, List, Author
+from rss3_dsl_client.schemas.base import Activities, BaseModel, Optional, List, Author
 
 
 class RssFeedMetadata(BaseModel):
