@@ -13,7 +13,7 @@ A client for interacting with the RSS3 Data Sub Layer (DSL) API.
 You can install the required dependencies using pip:
 
 ```bash
-pip install rss3-dsl-sdk
+pip install git+https://github.com/RSS3-Network/DSL-python-sdk
 ```
 
 ## Usage 📘
